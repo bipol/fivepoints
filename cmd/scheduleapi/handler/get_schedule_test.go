@@ -33,10 +33,10 @@ var _ = Describe("GetSchedule", func() {
 			t = ptypes.TimestampNow()
 			ctx = context.Background()
 			request = &schedule.GetScheduleRequest{
-				StartDate: t,
-				EndDate:   t,
-				Station:   "station",
-				Direction: "direction",
+				StartDate:   t,
+				EndDate:     t,
+				Station:     "station",
+				Destination: "direction",
 			}
 			response = nil
 			querier = &handlerfakes.FakeDynamoQuerier{}
@@ -64,10 +64,10 @@ var _ = Describe("GetSchedule", func() {
 		BeforeEach(func() {
 			t = ptypes.TimestampNow()
 			in = &schedule.GetScheduleRequest{
-				StartDate: t,
-				EndDate:   t,
-				Station:   "North Avenue Station",
-				Direction: "North Springs",
+				StartDate:   t,
+				EndDate:     t,
+				Station:     "North Avenue Station",
+				Destination: "North Springs",
 			}
 			err = nil
 		})
@@ -89,9 +89,9 @@ var _ = Describe("GetSchedule", func() {
 		When("missing station", func() {
 			BeforeEach(func() {
 				in = &schedule.GetScheduleRequest{
-					StartDate: t,
-					EndDate:   t,
-					Direction: "North Springs",
+					StartDate:   t,
+					EndDate:     t,
+					Destination: "North Springs",
 				}
 			})
 			It("should return an error", func() {
@@ -101,9 +101,9 @@ var _ = Describe("GetSchedule", func() {
 		When("missing start date", func() {
 			BeforeEach(func() {
 				in = &schedule.GetScheduleRequest{
-					EndDate:   t,
-					Station:   "North Avenue Station",
-					Direction: "North Springs",
+					EndDate:     t,
+					Station:     "North Avenue Station",
+					Destination: "North Springs",
 				}
 			})
 			It("should return an error", func() {
@@ -113,9 +113,9 @@ var _ = Describe("GetSchedule", func() {
 		When("missing end date", func() {
 			BeforeEach(func() {
 				in = &schedule.GetScheduleRequest{
-					StartDate: t,
-					Station:   "North Avenue Station",
-					Direction: "North Springs",
+					StartDate:   t,
+					Station:     "North Avenue Station",
+					Destination: "North Springs",
 				}
 			})
 			It("should return an error", func() {
@@ -142,17 +142,17 @@ var _ = Describe("GetSchedule", func() {
 			tableName = "table"
 			t = ptypes.TimestampNow()
 			in = &schedule.GetScheduleRequest{
-				StartDate: t,
-				EndDate:   t,
-				Station:   "North Avenue Station",
-				Direction: "North Springs",
+				StartDate:   t,
+				EndDate:     t,
+				Station:     "North Avenue Station",
+				Destination: "North Springs",
 			}
 			currTime, err = ptypes.Timestamp(t)
 			if err != nil {
 				Expect(err).To(BeNil())
 			}
 
-			pKey = fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDirection(), currTime.Format("2006-01-02"))
+			pKey = fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDestination(), currTime.Format("2006-01-02"))
 		})
 		JustBeforeEach(func() {
 			queryIn, err = handler.GetScheduleRequestToDynamoQuery(in, tableName)
@@ -160,9 +160,9 @@ var _ = Describe("GetSchedule", func() {
 		When("start date not set", func() {
 			BeforeEach(func() {
 				in = &schedule.GetScheduleRequest{
-					EndDate:   t,
-					Station:   "North Avenue Station",
-					Direction: "North Springs",
+					EndDate:     t,
+					Station:     "North Avenue Station",
+					Destination: "North Springs",
 				}
 			})
 			It("does return an error", func() {
@@ -172,9 +172,9 @@ var _ = Describe("GetSchedule", func() {
 		When("end date not set", func() {
 			BeforeEach(func() {
 				in = &schedule.GetScheduleRequest{
-					StartDate: t,
-					Station:   "North Avenue Station",
-					Direction: "North Springs",
+					StartDate:   t,
+					Station:     "North Avenue Station",
+					Destination: "North Springs",
 				}
 			})
 			It("does return an error", func() {
@@ -190,13 +190,13 @@ var _ = Describe("GetSchedule", func() {
 					}),
 					"ExpressionAttributeValues": MatchAllKeys(Keys{
 						":2": PointTo(MatchFields(IgnoreExtras, Fields{
-							"S": PointTo(Equal(currTime.Format(time.RFC3339Nano))),
+							"S": PointTo(Equal(currTime.Format("1/02/2006 3:04:05 PM"))),
 						})),
 						":0": PointTo(MatchFields(IgnoreExtras, Fields{
 							"S": PointTo(Equal(pKey)),
 						})),
 						":1": PointTo(MatchFields(IgnoreExtras, Fields{
-							"S": PointTo(Equal(currTime.Format(time.RFC3339Nano))),
+							"S": PointTo(Equal(currTime.Format("1/02/2006 3:04:05 PM"))),
 						})),
 					}),
 				})))

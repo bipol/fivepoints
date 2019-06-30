@@ -5,10 +5,10 @@ import "google/api/annotations.proto";
 package schedule;
 
 message GetScheduleRequest {
-    google.protobuf.Timestamp start_date = 1;
-    google.protobuf.Timestamp end_date = 2;
+    google.protobuf.Timestamp StartDate = 1;
+    google.protobuf.Timestamp EndDate = 2;
     string Station = 3;
-    string Direction = 4;
+    string Destination = 4;
 
 }
 

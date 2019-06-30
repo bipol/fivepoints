@@ -32,8 +32,8 @@ func ValidateRequest(ctx context.Context, in *schedule.GetScheduleRequest) error
 	if in == nil {
 		errStrings = append(errStrings, "request body is nil")
 	}
-	if strings.TrimSpace(in.GetDirection()) == "" {
-		errStrings = append(errStrings, "direction is nil")
+	if strings.TrimSpace(in.GetDestination()) == "" {
+		errStrings = append(errStrings, "destination is nil")
 	}
 	if strings.TrimSpace(in.GetStation()) == "" {
 		errStrings = append(errStrings, "station is nil")
@@ -59,12 +59,12 @@ func GetScheduleRequestToDynamoQuery(in *schedule.GetScheduleRequest, tableName 
 	if err != nil {
 		return nil, err
 	}
-	primaryKey := fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDirection(), s.Format("2006-01-02"))
+	primaryKey := fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDestination(), s.Format("2006-01-02"))
 	keyCondition := expression.
 		Key("PrimaryKey").
 		Equal(expression.Value(primaryKey)).
 		And(expression.Key("SortKey").
-			Between(expression.Value(s), expression.Value(e)))
+			Between(expression.Value(s.Format("1/02/2006 3:04:05 PM")), expression.Value(e.Format("1/02/2006 3:04:05 PM"))))
 	expr, err := expression.NewBuilder().WithKeyCondition(keyCondition).Build()
 	if err != nil {
 		return nil, err
