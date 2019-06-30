@@ -1,0 +1,41 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+package schedule;
+
+message GetScheduleRequest {
+    google.protobuf.Timestamp start_date = 1;
+    google.protobuf.Timestamp end_date = 2;
+    string Station = 3;
+    string Direction = 4;
+
+}
+
+message Schedule {
+    string PrimaryKey = 1;
+    string SortKey = 2;
+    string Destination = 3;
+    string Direction = 4;
+    string EventTime = 5;
+    string Line = 6;
+    string NextArrival = 7;
+    string Station = 8;
+    string TrainID = 9;
+    string WaitingSeconds = 10;
+    string WaitingTime = 11;
+    int64 TTL = 12;
+}
+
+message GetScheduleResponse {
+  repeated Schedule Schedules = 1;
+}
+
+service ScheduleService {
+    rpc GetSchedule(GetScheduleRequest) returns (GetScheduleResponse) {
+	option (google.api.http) = {
+	    post: "/v1/get-schedule"
+	    body: "*"
+	};
+    }
+}
