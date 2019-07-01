@@ -47,6 +47,9 @@ func ValidateRequest(ctx context.Context, in *schedule.GetScheduleRequest) error
 	if in.GetEndDate() == nil {
 		errStrings = append(errStrings, "end date is nil")
 	}
+	if in.GetStartDate().GetSeconds() > in.GetEndDate().GetSeconds() {
+		errStrings = append(errStrings, "start date must be before end date")
+	}
 	if len(errStrings) != 0 {
 		return errors.New(fmt.Sprintf("validation errors: %s", strings.Join(errStrings, ", ")))
 	}
@@ -120,13 +123,13 @@ func NewGetScheduleEndpoint(
 		}
 		err = dynamodbattribute.UnmarshalListOfMaps(output.Items, &schedules)
 		if err != nil {
-			return nil, err
+			return nil, status.Error(codes.Internal, err.Error())
 		}
 		var encodedBody string
 		if output.LastEvaluatedKey != nil {
 			marshal, err := json.Marshal(output.LastEvaluatedKey)
 			if err != nil {
-				return nil, err
+				return nil, status.Error(codes.Internal, err.Error())
 			}
 			encodedBody = base64.StdEncoding.EncodeToString(marshal)
 		}
