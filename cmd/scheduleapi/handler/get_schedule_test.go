@@ -47,10 +47,10 @@ var _ = Describe("GetSchedule", func() {
 		})
 		When("everything goes well", func() {
 			BeforeEach(func() {
-				querier.QueryWithContextReturns(&dynamodb.QueryOutput{}, nil)
+				querier.QueryWithContextReturns(&handler.DynamoJSON, nil)
 			})
 			It("should not return an error", func() {
-				Expect(len(response.Schedules)).To(BeZero())
+				Expect(len(response.Schedules)).To(Equal(3))
 				Expect(err).To(BeNil())
 			})
 		})
@@ -142,10 +142,11 @@ var _ = Describe("GetSchedule", func() {
 			tableName = "table"
 			t = ptypes.TimestampNow()
 			in = &schedule.GetScheduleRequest{
-				StartDate:   t,
-				EndDate:     t,
-				Station:     "North Avenue Station",
-				Destination: "North Springs",
+				StartDate:        t,
+				EndDate:          t,
+				Station:          "North Avenue Station",
+				Destination:      "North Springs",
+				LastEvaluatedKey: "bnVsbA==",
 			}
 			currTime, err = ptypes.Timestamp(t)
 			if err != nil {
