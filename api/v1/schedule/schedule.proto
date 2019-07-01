@@ -9,7 +9,7 @@ message GetScheduleRequest {
     google.protobuf.Timestamp EndDate = 2;
     string Station = 3;
     string Destination = 4;
-
+    string LastEvaluatedKey = 5;
 }
 
 message Schedule {
@@ -29,6 +29,8 @@ message Schedule {
 
 message GetScheduleResponse {
   repeated Schedule Schedules = 1;
+  string LastEvaluatedKey = 2;
+  int32 ResultLength = 3;
 }
 
 service ScheduleService {

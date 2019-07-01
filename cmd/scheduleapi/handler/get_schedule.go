@@ -2,6 +2,8 @@ package handler
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -21,6 +23,7 @@ import (
 
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . DynamoQuerier
 type DynamoQuerier interface {
+	QueryPagesWithContext(ctx aws.Context, input *dynamodb.QueryInput, fn func(*dynamodb.QueryOutput, bool) bool, opts ...request.Option) error
 	QueryWithContext(ctx aws.Context, input *dynamodb.QueryInput, opts ...request.Option) (*dynamodb.QueryOutput, error)
 }
 
@@ -76,6 +79,18 @@ func GetScheduleRequestToDynamoQuery(in *schedule.GetScheduleRequest, tableName 
 		ExpressionAttributeValues: expr.Values(),
 		KeyConditionExpression:    expr.KeyCondition(),
 	}
+	if in.GetLastEvaluatedKey() != "" {
+		lastEval := make(map[string]*dynamodb.AttributeValue)
+		decoded, err := base64.StdEncoding.DecodeString(in.GetLastEvaluatedKey())
+		if err != nil {
+			return nil, err
+		}
+		if err = json.Unmarshal(decoded, &lastEval); err != nil {
+			return nil, err
+		}
+		input.ExclusiveStartKey = lastEval
+	}
+
 	return input, nil
 }
 
@@ -91,6 +106,7 @@ func NewGetScheduleEndpoint(
 		if err != nil {
 			return nil, status.Error(codes.InvalidArgument, err.Error())
 		}
+
 		queryInput, err := GetScheduleRequestToDynamoQuery(in, tableName)
 		if err != nil {
 			return nil, status.Error(codes.Internal, err.Error())
@@ -106,8 +122,19 @@ func NewGetScheduleEndpoint(
 		if err != nil {
 			return nil, err
 		}
+		var encodedBody string
+		if output.LastEvaluatedKey != nil {
+			marshal, err := json.Marshal(output.LastEvaluatedKey)
+			if err != nil {
+				return nil, err
+			}
+			encodedBody = base64.StdEncoding.EncodeToString(marshal)
+		}
+
 		return &schedule.GetScheduleResponse{
-			Schedules: MartaSchedulesToProtoSchedules(schedules),
+			LastEvaluatedKey: encodedBody,
+			ResultLength:     int32(len(schedules)),
+			Schedules:        MartaSchedulesToProtoSchedules(schedules),
 		}, nil
 	}
 }

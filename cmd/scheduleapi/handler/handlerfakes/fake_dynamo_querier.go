@@ -11,6 +11,20 @@ import (
 )
 
 type FakeDynamoQuerier struct {
+	QueryPagesWithContextStub        func(context.Context, *dynamodb.QueryInput, func(*dynamodb.QueryOutput, bool) bool, ...request.Option) error
+	queryPagesWithContextMutex       sync.RWMutex
+	queryPagesWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *dynamodb.QueryInput
+		arg3 func(*dynamodb.QueryOutput, bool) bool
+		arg4 []request.Option
+	}
+	queryPagesWithContextReturns struct {
+		result1 error
+	}
+	queryPagesWithContextReturnsOnCall map[int]struct {
+		result1 error
+	}
 	QueryWithContextStub        func(context.Context, *dynamodb.QueryInput, ...request.Option) (*dynamodb.QueryOutput, error)
 	queryWithContextMutex       sync.RWMutex
 	queryWithContextArgsForCall []struct {
@@ -28,6 +42,69 @@ type FakeDynamoQuerier struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeDynamoQuerier) QueryPagesWithContext(arg1 context.Context, arg2 *dynamodb.QueryInput, arg3 func(*dynamodb.QueryOutput, bool) bool, arg4 ...request.Option) error {
+	fake.queryPagesWithContextMutex.Lock()
+	ret, specificReturn := fake.queryPagesWithContextReturnsOnCall[len(fake.queryPagesWithContextArgsForCall)]
+	fake.queryPagesWithContextArgsForCall = append(fake.queryPagesWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *dynamodb.QueryInput
+		arg3 func(*dynamodb.QueryOutput, bool) bool
+		arg4 []request.Option
+	}{arg1, arg2, arg3, arg4})
+	fake.recordInvocation("QueryPagesWithContext", []interface{}{arg1, arg2, arg3, arg4})
+	fake.queryPagesWithContextMutex.Unlock()
+	if fake.QueryPagesWithContextStub != nil {
+		return fake.QueryPagesWithContextStub(arg1, arg2, arg3, arg4...)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	fakeReturns := fake.queryPagesWithContextReturns
+	return fakeReturns.result1
+}
+
+func (fake *FakeDynamoQuerier) QueryPagesWithContextCallCount() int {
+	fake.queryPagesWithContextMutex.RLock()
+	defer fake.queryPagesWithContextMutex.RUnlock()
+	return len(fake.queryPagesWithContextArgsForCall)
+}
+
+func (fake *FakeDynamoQuerier) QueryPagesWithContextCalls(stub func(context.Context, *dynamodb.QueryInput, func(*dynamodb.QueryOutput, bool) bool, ...request.Option) error) {
+	fake.queryPagesWithContextMutex.Lock()
+	defer fake.queryPagesWithContextMutex.Unlock()
+	fake.QueryPagesWithContextStub = stub
+}
+
+func (fake *FakeDynamoQuerier) QueryPagesWithContextArgsForCall(i int) (context.Context, *dynamodb.QueryInput, func(*dynamodb.QueryOutput, bool) bool, []request.Option) {
+	fake.queryPagesWithContextMutex.RLock()
+	defer fake.queryPagesWithContextMutex.RUnlock()
+	argsForCall := fake.queryPagesWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
+}
+
+func (fake *FakeDynamoQuerier) QueryPagesWithContextReturns(result1 error) {
+	fake.queryPagesWithContextMutex.Lock()
+	defer fake.queryPagesWithContextMutex.Unlock()
+	fake.QueryPagesWithContextStub = nil
+	fake.queryPagesWithContextReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeDynamoQuerier) QueryPagesWithContextReturnsOnCall(i int, result1 error) {
+	fake.queryPagesWithContextMutex.Lock()
+	defer fake.queryPagesWithContextMutex.Unlock()
+	fake.QueryPagesWithContextStub = nil
+	if fake.queryPagesWithContextReturnsOnCall == nil {
+		fake.queryPagesWithContextReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.queryPagesWithContextReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeDynamoQuerier) QueryWithContext(arg1 context.Context, arg2 *dynamodb.QueryInput, arg3 ...request.Option) (*dynamodb.QueryOutput, error) {
@@ -98,6 +175,8 @@ func (fake *FakeDynamoQuerier) QueryWithContextReturnsOnCall(i int, result1 *dyn
 func (fake *FakeDynamoQuerier) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.queryPagesWithContextMutex.RLock()
+	defer fake.queryPagesWithContextMutex.RUnlock()
 	fake.queryWithContextMutex.RLock()
 	defer fake.queryWithContextMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
