@@ -35,8 +35,8 @@ type envelope struct {
 }
 
 func (s *Server) GetSchedule(ctx context.Context, in *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
-	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
-	var respChan chan envelope
+	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
+	respChan := make(chan envelope, 1)
 	defer cancel()
 	go func() {
 		defer close(respChan)

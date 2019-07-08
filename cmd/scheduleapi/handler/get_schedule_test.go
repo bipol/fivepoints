@@ -42,6 +42,7 @@ var _ = Describe("GetSchedule", func() {
 			response = nil
 			querier = &handlerfakes.FakeDynamoQuerier{}
 			authorizer = &handlerfakes.FakeAuthorizer{}
+			authorizer.IsAuthorizedReturns(true, nil)
 			endpoint = handler.NewGetScheduleEndpoint("tableName", querier, authorizer)
 		})
 		JustBeforeEach(func() {
@@ -60,11 +61,13 @@ var _ = Describe("GetSchedule", func() {
 	Context("ValidateRequest", func() {
 		var (
 			t   *timestamp.Timestamp
+			n   *timestamp.Timestamp
 			in  *schedule.GetScheduleRequest
 			err error
 		)
 		BeforeEach(func() {
 			t = ptypes.TimestampNow()
+			n, _ = ptypes.TimestampProto(time.Now().Add(24 * 60 * time.Minute))
 			in = &schedule.GetScheduleRequest{
 				StartDate:   t,
 				EndDate:     t,
@@ -116,6 +119,19 @@ var _ = Describe("GetSchedule", func() {
 			BeforeEach(func() {
 				in = &schedule.GetScheduleRequest{
 					StartDate:   t,
+					Station:     "North Avenue Station",
+					Destination: "North Springs",
+				}
+			})
+			It("should return an error", func() {
+				Expect(err).ToNot(BeNil())
+			})
+		})
+		When("on different days", func() {
+			BeforeEach(func() {
+				in = &schedule.GetScheduleRequest{
+					StartDate:   t,
+					EndDate:     n,
 					Station:     "North Avenue Station",
 					Destination: "North Springs",
 				}

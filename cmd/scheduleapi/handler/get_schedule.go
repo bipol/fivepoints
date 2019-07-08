@@ -50,6 +50,17 @@ func ValidateRequest(ctx context.Context, in *schedule.GetScheduleRequest) error
 	if in.GetStartDate().GetSeconds() > in.GetEndDate().GetSeconds() {
 		errStrings = append(errStrings, "start date must be before end date")
 	}
+	s, err := ptypes.Timestamp(in.GetStartDate())
+	if err != nil {
+		errStrings = append(errStrings, "start must be RFC3339 encoded")
+	}
+	e, err := ptypes.Timestamp(in.GetEndDate())
+	if err != nil {
+		errStrings = append(errStrings, "end must be RFC3339 encoded")
+	}
+	if e.Format("2006-01-02") != s.Format("2006-01-02") {
+		errStrings = append(errStrings, "start and end must be on the same day")
+	}
 	if len(errStrings) != 0 {
 		return errors.New(fmt.Sprintf("validation errors: %s", strings.Join(errStrings, ", ")))
 	}
