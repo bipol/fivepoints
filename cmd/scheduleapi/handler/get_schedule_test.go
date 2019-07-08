@@ -20,13 +20,14 @@ import (
 var _ = Describe("GetSchedule", func() {
 	Context("NewGetScheduleEndpoint", func() {
 		var (
-			request  *schedule.GetScheduleRequest
-			response *schedule.GetScheduleResponse
-			ctx      context.Context
-			endpoint handler.GetScheduleEndpoint
-			querier  *handlerfakes.FakeDynamoQuerier
-			err      error
-			t        *timestamp.Timestamp
+			request    *schedule.GetScheduleRequest
+			response   *schedule.GetScheduleResponse
+			ctx        context.Context
+			endpoint   handler.GetScheduleEndpoint
+			querier    *handlerfakes.FakeDynamoQuerier
+			authorizer *handlerfakes.FakeAuthorizer
+			err        error
+			t          *timestamp.Timestamp
 		)
 		BeforeEach(func() {
 			err = nil
@@ -40,7 +41,8 @@ var _ = Describe("GetSchedule", func() {
 			}
 			response = nil
 			querier = &handlerfakes.FakeDynamoQuerier{}
-			endpoint = handler.NewGetScheduleEndpoint("tableName", querier)
+			authorizer = &handlerfakes.FakeAuthorizer{}
+			endpoint = handler.NewGetScheduleEndpoint("tableName", querier, authorizer)
 		})
 		JustBeforeEach(func() {
 			response, err = endpoint(ctx, request)

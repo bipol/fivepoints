@@ -17,15 +17,17 @@ import (
 	"github.com/rs/cors"
 	"github.com/smartatransit/fivepoints/api/v1/schedule"
 	"github.com/smartatransit/fivepoints/cmd/scheduleapi/handler"
+	"github.com/smartatransit/fivepoints/pkg/authorize"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 type options struct {
-	DynamoTableName string `long:"dynamo-table-name" env:"DYNAMO_TABLE_NAME" description:"dynamo table name"`
-	GRPCPort        int    `long:"grpc-port" env:"GRPC_PORT" description:"port that the grpc server will be started" required:"true"`
-	RESTPort        int    `long:"rest-port" env:"REST_PORT" description:"port that the rest server will be started" required:"true"`
+	JWTSigningSecret string `long:"jwt-signing-secret" env:"JWT_SIGNING_SECRET" description:"the jwt signing secret" required:"true"`
+	DynamoTableName  string `long:"dynamo-table-name" env:"DYNAMO_TABLE_NAME" description:"dynamo table name"`
+	GRPCPort         int    `long:"grpc-port" env:"GRPC_PORT" description:"port that the grpc server will be started" required:"true"`
+	RESTPort         int    `long:"rest-port" env:"REST_PORT" description:"port that the rest server will be started" required:"true"`
 }
 
 func main() {
@@ -56,8 +58,9 @@ func main() {
 		IdleTimeout:  60 * time.Second,
 	}
 
+	authorizer := authorize.NewClient(opts.JWTSigningSecret)
 	grpcAddr := fmt.Sprintf("localhost:%d", opts.GRPCPort)
-	scheduleAPI := handler.NewWithDefaultEndpoints(opts.DynamoTableName, svc)
+	scheduleAPI := handler.NewWithDefaultEndpoints(opts.DynamoTableName, svc, authorizer)
 	dopts := []grpc.DialOption{grpc.WithInsecure()}
 	schedule.RegisterScheduleServiceServer(s, scheduleAPI)
 	err = schedule.RegisterScheduleServiceHandlerFromEndpoint(ctx, mux, grpcAddr, dopts)

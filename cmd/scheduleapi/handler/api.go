@@ -18,8 +18,9 @@ type Server struct {
 func NewWithDefaultEndpoints(
 	tableName string,
 	querier DynamoQuerier,
+	authorizer Authorizer,
 ) *Server {
-	getScheduleEndpoint := NewGetScheduleEndpoint(tableName, querier)
+	getScheduleEndpoint := NewGetScheduleEndpoint(tableName, querier, authorizer)
 	return &Server{
 		getScheduleEndpoint,
 	}

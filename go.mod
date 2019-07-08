@@ -4,6 +4,7 @@ require (
 	github.com/aws/aws-sdk-go v1.20.12
 	github.com/bipol/scrapedumper v0.0.0-20190627221445-ba8c2614e900
 	github.com/davecgh/go-spew v1.1.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang/protobuf v1.3.1
 	github.com/grpc-ecosystem/grpc-gateway v1.9.3
 	github.com/jessevdk/go-flags v1.4.0

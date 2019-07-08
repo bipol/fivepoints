@@ -97,13 +97,22 @@ func GetScheduleRequestToDynamoQuery(in *schedule.GetScheduleRequest, tableName 
 	return input, nil
 }
 
+//go:generate counterfeiter . Authorizer
+type Authorizer interface {
+	IsAuthorized(ctx context.Context) (bool, error)
+}
+
 func NewGetScheduleEndpoint(
 	tableName string,
 	querier DynamoQuerier,
+	authorizer Authorizer,
 ) func(context.Context, *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
 	return func(ctx context.Context, in *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
 		var schedules []martaapi.Schedule
-		//todo -- jwt authorization?
+
+		if ok, err := authorizer.IsAuthorized(ctx); !ok {
+			return nil, status.Error(codes.PermissionDenied, err.Error())
+		}
 
 		err := ValidateRequest(ctx, in)
 		if err != nil {
