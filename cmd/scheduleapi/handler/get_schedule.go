@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/request"
@@ -81,7 +82,7 @@ func GetScheduleRequestToDynamoQuery(in *schedule.GetScheduleRequest, tableName 
 		Key("PrimaryKey").
 		Equal(expression.Value(primaryKey)).
 		And(expression.Key("SortKey").
-			Between(expression.Value(s.Format("1/02/2006 3:04:05 PM")), expression.Value(e.Format("1/02/2006 3:04:05 PM"))))
+			Between(expression.Value(s.Format(time.RFC3339)), expression.Value(e.Format(time.RFC3339))))
 	expr, err := expression.NewBuilder().WithKeyCondition(keyCondition).Build()
 	if err != nil {
 		return nil, err

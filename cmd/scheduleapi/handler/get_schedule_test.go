@@ -209,13 +209,13 @@ var _ = Describe("GetSchedule", func() {
 					}),
 					"ExpressionAttributeValues": MatchAllKeys(Keys{
 						":2": PointTo(MatchFields(IgnoreExtras, Fields{
-							"S": PointTo(Equal(currTime.Format("1/02/2006 3:04:05 PM"))),
+							"S": PointTo(Equal(currTime.Format(time.RFC3339))),
 						})),
 						":0": PointTo(MatchFields(IgnoreExtras, Fields{
 							"S": PointTo(Equal(pKey)),
 						})),
 						":1": PointTo(MatchFields(IgnoreExtras, Fields{
-							"S": PointTo(Equal(currTime.Format("1/02/2006 3:04:05 PM"))),
+							"S": PointTo(Equal(currTime.Format(time.RFC3339))),
 						})),
 					}),
 				})))
