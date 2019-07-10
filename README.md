@@ -5,6 +5,11 @@
 
 It is an API that will expose data living in dynamo, and in the future, likely other data sources.
 
+## Continuous Integration Status
+
+[![Continuous Integration status](https://travis-ci.org/smartatransit/smarta-api.svg?branch=master)](https://travis-ci.org/smartatransit/scrapedumper.svg?branch=master)
+[![codecov](https://codecov.io/gh/smartatransit/smarta-api/branch/master/graph/badge.svg)](https://codecov.io/gh/smartatransit/scrapedumper)
+
 ## Why is this needed?
 We are collecting a historical dataset of `MARTA` real-time data.  This will enable us to access it.
 
