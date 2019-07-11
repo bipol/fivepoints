@@ -17,13 +17,13 @@ import (
 	"github.com/smartatransit/fivepoints/cmd/scheduleapi/handler/handlerfakes"
 )
 
-var _ = Describe("GetSchedule", func() {
-	Context("NewGetScheduleEndpoint", func() {
+var _ = Describe("GetArrivalEstimates", func() {
+	Context("NewGetArrivalEstimatesEndpoint", func() {
 		var (
-			request    *schedule.GetScheduleRequest
-			response   *schedule.GetScheduleResponse
+			request    *schedule.GetArrivalEstimatesRequest
+			response   *schedule.GetArrivalEstimatesResponse
 			ctx        context.Context
-			endpoint   handler.GetScheduleEndpoint
+			endpoint   handler.GetArrivalEstimatesEndpoint
 			querier    *handlerfakes.FakeDynamoQuerier
 			authorizer *handlerfakes.FakeAuthorizer
 			err        error
@@ -33,7 +33,7 @@ var _ = Describe("GetSchedule", func() {
 			err = nil
 			t = ptypes.TimestampNow()
 			ctx = context.Background()
-			request = &schedule.GetScheduleRequest{
+			request = &schedule.GetArrivalEstimatesRequest{
 				StartDate:   t,
 				EndDate:     t,
 				Station:     "station",
@@ -43,7 +43,7 @@ var _ = Describe("GetSchedule", func() {
 			querier = &handlerfakes.FakeDynamoQuerier{}
 			authorizer = &handlerfakes.FakeAuthorizer{}
 			authorizer.IsAuthorizedReturns(true, nil)
-			endpoint = handler.NewGetScheduleEndpoint("tableName", querier, authorizer)
+			endpoint = handler.NewGetArrivalEstimatesEndpoint("tableName", querier, authorizer)
 		})
 		JustBeforeEach(func() {
 			response, err = endpoint(ctx, request)
@@ -53,7 +53,7 @@ var _ = Describe("GetSchedule", func() {
 				querier.QueryWithContextReturns(&handler.DynamoJSON, nil)
 			})
 			It("should not return an error", func() {
-				Expect(len(response.Schedules)).To(Equal(3))
+				Expect(len(response.ArrivalEstimates)).To(Equal(3))
 				Expect(err).To(BeNil())
 			})
 		})
@@ -62,13 +62,13 @@ var _ = Describe("GetSchedule", func() {
 		var (
 			t   *timestamp.Timestamp
 			n   *timestamp.Timestamp
-			in  *schedule.GetScheduleRequest
+			in  *schedule.GetArrivalEstimatesRequest
 			err error
 		)
 		BeforeEach(func() {
 			t = ptypes.TimestampNow()
 			n, _ = ptypes.TimestampProto(time.Now().Add(24 * 60 * time.Minute))
-			in = &schedule.GetScheduleRequest{
+			in = &schedule.GetArrivalEstimatesRequest{
 				StartDate:   t,
 				EndDate:     t,
 				Station:     "North Avenue Station",
@@ -81,7 +81,7 @@ var _ = Describe("GetSchedule", func() {
 		})
 		When("missing direction", func() {
 			BeforeEach(func() {
-				in = &schedule.GetScheduleRequest{
+				in = &schedule.GetArrivalEstimatesRequest{
 					StartDate: t,
 					EndDate:   t,
 					Station:   "North Avenue Station",
@@ -93,7 +93,7 @@ var _ = Describe("GetSchedule", func() {
 		})
 		When("missing station", func() {
 			BeforeEach(func() {
-				in = &schedule.GetScheduleRequest{
+				in = &schedule.GetArrivalEstimatesRequest{
 					StartDate:   t,
 					EndDate:     t,
 					Destination: "North Springs",
@@ -105,7 +105,7 @@ var _ = Describe("GetSchedule", func() {
 		})
 		When("missing start date", func() {
 			BeforeEach(func() {
-				in = &schedule.GetScheduleRequest{
+				in = &schedule.GetArrivalEstimatesRequest{
 					EndDate:     t,
 					Station:     "North Avenue Station",
 					Destination: "North Springs",
@@ -117,7 +117,7 @@ var _ = Describe("GetSchedule", func() {
 		})
 		When("missing end date", func() {
 			BeforeEach(func() {
-				in = &schedule.GetScheduleRequest{
+				in = &schedule.GetArrivalEstimatesRequest{
 					StartDate:   t,
 					Station:     "North Avenue Station",
 					Destination: "North Springs",
@@ -129,7 +129,7 @@ var _ = Describe("GetSchedule", func() {
 		})
 		When("on different days", func() {
 			BeforeEach(func() {
-				in = &schedule.GetScheduleRequest{
+				in = &schedule.GetArrivalEstimatesRequest{
 					StartDate:   t,
 					EndDate:     n,
 					Station:     "North Avenue Station",
@@ -146,9 +146,9 @@ var _ = Describe("GetSchedule", func() {
 			})
 		})
 	})
-	Context("GetScheduleRequestToDynamoQuery", func() {
+	Context("GetArrivalEstimatesRequestToDynamoQuery", func() {
 		var (
-			in        *schedule.GetScheduleRequest
+			in        *schedule.GetArrivalEstimatesRequest
 			tableName string
 			queryIn   *dynamodb.QueryInput
 			err       error
@@ -159,7 +159,7 @@ var _ = Describe("GetSchedule", func() {
 		BeforeEach(func() {
 			tableName = "table"
 			t = ptypes.TimestampNow()
-			in = &schedule.GetScheduleRequest{
+			in = &schedule.GetArrivalEstimatesRequest{
 				StartDate:        t,
 				EndDate:          t,
 				Station:          "North Avenue Station",
@@ -174,11 +174,11 @@ var _ = Describe("GetSchedule", func() {
 			pKey = fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDestination(), currTime.Format("2006-01-02"))
 		})
 		JustBeforeEach(func() {
-			queryIn, err = handler.GetScheduleRequestToDynamoQuery(in, tableName)
+			queryIn, err = handler.GetArrivalEstimatesRequestToDynamoQuery(in, tableName)
 		})
 		When("start date not set", func() {
 			BeforeEach(func() {
-				in = &schedule.GetScheduleRequest{
+				in = &schedule.GetArrivalEstimatesRequest{
 					EndDate:     t,
 					Station:     "North Avenue Station",
 					Destination: "North Springs",
@@ -190,7 +190,7 @@ var _ = Describe("GetSchedule", func() {
 		})
 		When("end date not set", func() {
 			BeforeEach(func() {
-				in = &schedule.GetScheduleRequest{
+				in = &schedule.GetArrivalEstimatesRequest{
 					StartDate:   t,
 					Station:     "North Avenue Station",
 					Destination: "North Springs",

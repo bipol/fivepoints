@@ -28,10 +28,10 @@ type DynamoQuerier interface {
 	QueryWithContext(ctx aws.Context, input *dynamodb.QueryInput, opts ...request.Option) (*dynamodb.QueryOutput, error)
 }
 
-//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . GetScheduleEndpoint
-type GetScheduleEndpoint func(context.Context, *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error)
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . GetArrivalEstimatesEndpoint
+type GetArrivalEstimatesEndpoint func(context.Context, *schedule.GetArrivalEstimatesRequest) (*schedule.GetArrivalEstimatesResponse, error)
 
-func ValidateRequest(ctx context.Context, in *schedule.GetScheduleRequest) error {
+func ValidateRequest(ctx context.Context, in *schedule.GetArrivalEstimatesRequest) error {
 	var errStrings []string
 	if in == nil {
 		errStrings = append(errStrings, "request body is nil")
@@ -68,7 +68,7 @@ func ValidateRequest(ctx context.Context, in *schedule.GetScheduleRequest) error
 	return nil
 }
 
-func GetScheduleRequestToDynamoQuery(in *schedule.GetScheduleRequest, tableName string) (*dynamodb.QueryInput, error) {
+func GetArrivalEstimatesRequestToDynamoQuery(in *schedule.GetArrivalEstimatesRequest, tableName string) (*dynamodb.QueryInput, error) {
 	s, err := ptypes.Timestamp(in.GetStartDate())
 	if err != nil {
 		return nil, err
@@ -114,13 +114,13 @@ type Authorizer interface {
 	IsAuthorized(ctx context.Context) (bool, error)
 }
 
-func NewGetScheduleEndpoint(
+func NewGetArrivalEstimatesEndpoint(
 	tableName string,
 	querier DynamoQuerier,
 	authorizer Authorizer,
-) func(context.Context, *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
-	return func(ctx context.Context, in *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
-		var schedules []martaapi.Schedule
+) func(context.Context, *schedule.GetArrivalEstimatesRequest) (*schedule.GetArrivalEstimatesResponse, error) {
+	return func(ctx context.Context, in *schedule.GetArrivalEstimatesRequest) (*schedule.GetArrivalEstimatesResponse, error) {
+		var schedules []martaapi.ArrivalEstimate
 
 		if ok, err := authorizer.IsAuthorized(ctx); !ok {
 			return nil, status.Error(codes.PermissionDenied, err.Error())
@@ -131,7 +131,7 @@ func NewGetScheduleEndpoint(
 			return nil, status.Error(codes.InvalidArgument, err.Error())
 		}
 
-		queryInput, err := GetScheduleRequestToDynamoQuery(in, tableName)
+		queryInput, err := GetArrivalEstimatesRequestToDynamoQuery(in, tableName)
 		if err != nil {
 			return nil, status.Error(codes.Internal, err.Error())
 		}
@@ -140,7 +140,7 @@ func NewGetScheduleEndpoint(
 			return nil, status.Error(codes.Internal, err.Error())
 		}
 		if len(output.Items) == 0 {
-			return &schedule.GetScheduleResponse{}, nil
+			return &schedule.GetArrivalEstimatesResponse{}, nil
 		}
 		err = dynamodbattribute.UnmarshalListOfMaps(output.Items, &schedules)
 		if err != nil {
@@ -155,18 +155,18 @@ func NewGetScheduleEndpoint(
 			encodedBody = base64.StdEncoding.EncodeToString(marshal)
 		}
 
-		return &schedule.GetScheduleResponse{
+		return &schedule.GetArrivalEstimatesResponse{
 			LastEvaluatedKey: encodedBody,
 			ResultLength:     int32(len(schedules)),
-			Schedules:        MartaSchedulesToProtoSchedules(schedules),
+			ArrivalEstimates: MartaArrivalEstimatesToProtoArrivalEstimates(schedules),
 		}, nil
 	}
 }
 
-func MartaSchedulesToProtoSchedules(martaScheds []martaapi.Schedule) []*schedule.Schedule {
-	var protoSchedule []*schedule.Schedule
+func MartaArrivalEstimatesToProtoArrivalEstimates(martaScheds []martaapi.ArrivalEstimate) []*schedule.ArrivalEstimate {
+	var protoArrivalEstimate []*schedule.ArrivalEstimate
 	for _, sched := range martaScheds {
-		x := schedule.Schedule{
+		x := schedule.ArrivalEstimate{
 			PrimaryKey:     sched.PrimaryKey,
 			SortKey:        sched.SortKey,
 			Destination:    sched.Destination,
@@ -180,7 +180,7 @@ func MartaSchedulesToProtoSchedules(martaScheds []martaapi.Schedule) []*schedule
 			WaitingTime:    sched.WaitingTime,
 			TTL:            sched.TTL,
 		}
-		protoSchedule = append(protoSchedule, &x)
+		protoArrivalEstimate = append(protoArrivalEstimate, &x)
 	}
-	return protoSchedule
+	return protoArrivalEstimate
 }

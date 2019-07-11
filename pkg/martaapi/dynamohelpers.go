@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
-func ScheduleToWriteRequest(s Schedule, t string) (*dynamodb.WriteRequest, error) {
+func ArrivalEstimateToWriteRequest(s ArrivalEstimate, t string) (*dynamodb.WriteRequest, error) {
 	date, err := time.Parse("1/02/2006 3:04:05 PM", s.EventTime)
 	if err != nil {
 		return nil, err
@@ -29,7 +29,7 @@ func ScheduleToWriteRequest(s Schedule, t string) (*dynamodb.WriteRequest, error
 	}, nil
 }
 
-func DigestScheduleResponse(r io.Reader, t string) ([]*dynamodb.BatchWriteItemInput, error) {
+func DigestArrivalEstimateResponse(r io.Reader, t string) ([]*dynamodb.BatchWriteItemInput, error) {
 	var (
 		inp []*dynamodb.BatchWriteItemInput
 	)
@@ -49,12 +49,12 @@ func DigestScheduleResponse(r io.Reader, t string) ([]*dynamodb.BatchWriteItemIn
 			requestItems = make(map[string][]*dynamodb.WriteRequest)
 		}
 
-		var s Schedule
+		var s ArrivalEstimate
 		err = dec.Decode(&s)
 		if err != nil {
 			return nil, err
 		}
-		wr, err := ScheduleToWriteRequest(s, t)
+		wr, err := ArrivalEstimateToWriteRequest(s, t)
 		if err != nil {
 			return nil, err
 		}

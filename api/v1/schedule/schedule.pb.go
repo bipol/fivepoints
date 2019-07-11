@@ -26,7 +26,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type GetScheduleRequest struct {
+type GetArrivalEstimatesRequest struct {
 	StartDate            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=StartDate,proto3" json:"StartDate,omitempty"`
 	EndDate              *timestamp.Timestamp `protobuf:"bytes,2,opt,name=EndDate,proto3" json:"EndDate,omitempty"`
 	Station              string               `protobuf:"bytes,3,opt,name=Station,proto3" json:"Station,omitempty"`
@@ -37,67 +37,67 @@ type GetScheduleRequest struct {
 	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *GetScheduleRequest) Reset()         { *m = GetScheduleRequest{} }
-func (m *GetScheduleRequest) String() string { return proto.CompactTextString(m) }
-func (*GetScheduleRequest) ProtoMessage()    {}
-func (*GetScheduleRequest) Descriptor() ([]byte, []int) {
+func (m *GetArrivalEstimatesRequest) Reset()         { *m = GetArrivalEstimatesRequest{} }
+func (m *GetArrivalEstimatesRequest) String() string { return proto.CompactTextString(m) }
+func (*GetArrivalEstimatesRequest) ProtoMessage()    {}
+func (*GetArrivalEstimatesRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d00842e68e05382a, []int{0}
 }
 
-func (m *GetScheduleRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetScheduleRequest.Unmarshal(m, b)
+func (m *GetArrivalEstimatesRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetArrivalEstimatesRequest.Unmarshal(m, b)
 }
-func (m *GetScheduleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetScheduleRequest.Marshal(b, m, deterministic)
+func (m *GetArrivalEstimatesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetArrivalEstimatesRequest.Marshal(b, m, deterministic)
 }
-func (m *GetScheduleRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetScheduleRequest.Merge(m, src)
+func (m *GetArrivalEstimatesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetArrivalEstimatesRequest.Merge(m, src)
 }
-func (m *GetScheduleRequest) XXX_Size() int {
-	return xxx_messageInfo_GetScheduleRequest.Size(m)
+func (m *GetArrivalEstimatesRequest) XXX_Size() int {
+	return xxx_messageInfo_GetArrivalEstimatesRequest.Size(m)
 }
-func (m *GetScheduleRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetScheduleRequest.DiscardUnknown(m)
+func (m *GetArrivalEstimatesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetArrivalEstimatesRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetScheduleRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetArrivalEstimatesRequest proto.InternalMessageInfo
 
-func (m *GetScheduleRequest) GetStartDate() *timestamp.Timestamp {
+func (m *GetArrivalEstimatesRequest) GetStartDate() *timestamp.Timestamp {
 	if m != nil {
 		return m.StartDate
 	}
 	return nil
 }
 
-func (m *GetScheduleRequest) GetEndDate() *timestamp.Timestamp {
+func (m *GetArrivalEstimatesRequest) GetEndDate() *timestamp.Timestamp {
 	if m != nil {
 		return m.EndDate
 	}
 	return nil
 }
 
-func (m *GetScheduleRequest) GetStation() string {
+func (m *GetArrivalEstimatesRequest) GetStation() string {
 	if m != nil {
 		return m.Station
 	}
 	return ""
 }
 
-func (m *GetScheduleRequest) GetDestination() string {
+func (m *GetArrivalEstimatesRequest) GetDestination() string {
 	if m != nil {
 		return m.Destination
 	}
 	return ""
 }
 
-func (m *GetScheduleRequest) GetLastEvaluatedKey() string {
+func (m *GetArrivalEstimatesRequest) GetLastEvaluatedKey() string {
 	if m != nil {
 		return m.LastEvaluatedKey
 	}
 	return ""
 }
 
-type Schedule struct {
+type ArrivalEstimate struct {
 	PrimaryKey           string   `protobuf:"bytes,1,opt,name=PrimaryKey,proto3" json:"PrimaryKey,omitempty"`
 	SortKey              string   `protobuf:"bytes,2,opt,name=SortKey,proto3" json:"SortKey,omitempty"`
 	Destination          string   `protobuf:"bytes,3,opt,name=Destination,proto3" json:"Destination,omitempty"`
@@ -115,164 +115,164 @@ type Schedule struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Schedule) Reset()         { *m = Schedule{} }
-func (m *Schedule) String() string { return proto.CompactTextString(m) }
-func (*Schedule) ProtoMessage()    {}
-func (*Schedule) Descriptor() ([]byte, []int) {
+func (m *ArrivalEstimate) Reset()         { *m = ArrivalEstimate{} }
+func (m *ArrivalEstimate) String() string { return proto.CompactTextString(m) }
+func (*ArrivalEstimate) ProtoMessage()    {}
+func (*ArrivalEstimate) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d00842e68e05382a, []int{1}
 }
 
-func (m *Schedule) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Schedule.Unmarshal(m, b)
+func (m *ArrivalEstimate) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ArrivalEstimate.Unmarshal(m, b)
 }
-func (m *Schedule) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Schedule.Marshal(b, m, deterministic)
+func (m *ArrivalEstimate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ArrivalEstimate.Marshal(b, m, deterministic)
 }
-func (m *Schedule) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Schedule.Merge(m, src)
+func (m *ArrivalEstimate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ArrivalEstimate.Merge(m, src)
 }
-func (m *Schedule) XXX_Size() int {
-	return xxx_messageInfo_Schedule.Size(m)
+func (m *ArrivalEstimate) XXX_Size() int {
+	return xxx_messageInfo_ArrivalEstimate.Size(m)
 }
-func (m *Schedule) XXX_DiscardUnknown() {
-	xxx_messageInfo_Schedule.DiscardUnknown(m)
+func (m *ArrivalEstimate) XXX_DiscardUnknown() {
+	xxx_messageInfo_ArrivalEstimate.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Schedule proto.InternalMessageInfo
+var xxx_messageInfo_ArrivalEstimate proto.InternalMessageInfo
 
-func (m *Schedule) GetPrimaryKey() string {
+func (m *ArrivalEstimate) GetPrimaryKey() string {
 	if m != nil {
 		return m.PrimaryKey
 	}
 	return ""
 }
 
-func (m *Schedule) GetSortKey() string {
+func (m *ArrivalEstimate) GetSortKey() string {
 	if m != nil {
 		return m.SortKey
 	}
 	return ""
 }
 
-func (m *Schedule) GetDestination() string {
+func (m *ArrivalEstimate) GetDestination() string {
 	if m != nil {
 		return m.Destination
 	}
 	return ""
 }
 
-func (m *Schedule) GetDirection() string {
+func (m *ArrivalEstimate) GetDirection() string {
 	if m != nil {
 		return m.Direction
 	}
 	return ""
 }
 
-func (m *Schedule) GetEventTime() string {
+func (m *ArrivalEstimate) GetEventTime() string {
 	if m != nil {
 		return m.EventTime
 	}
 	return ""
 }
 
-func (m *Schedule) GetLine() string {
+func (m *ArrivalEstimate) GetLine() string {
 	if m != nil {
 		return m.Line
 	}
 	return ""
 }
 
-func (m *Schedule) GetNextArrival() string {
+func (m *ArrivalEstimate) GetNextArrival() string {
 	if m != nil {
 		return m.NextArrival
 	}
 	return ""
 }
 
-func (m *Schedule) GetStation() string {
+func (m *ArrivalEstimate) GetStation() string {
 	if m != nil {
 		return m.Station
 	}
 	return ""
 }
 
-func (m *Schedule) GetTrainID() string {
+func (m *ArrivalEstimate) GetTrainID() string {
 	if m != nil {
 		return m.TrainID
 	}
 	return ""
 }
 
-func (m *Schedule) GetWaitingSeconds() string {
+func (m *ArrivalEstimate) GetWaitingSeconds() string {
 	if m != nil {
 		return m.WaitingSeconds
 	}
 	return ""
 }
 
-func (m *Schedule) GetWaitingTime() string {
+func (m *ArrivalEstimate) GetWaitingTime() string {
 	if m != nil {
 		return m.WaitingTime
 	}
 	return ""
 }
 
-func (m *Schedule) GetTTL() int64 {
+func (m *ArrivalEstimate) GetTTL() int64 {
 	if m != nil {
 		return m.TTL
 	}
 	return 0
 }
 
-type GetScheduleResponse struct {
-	Schedules            []*Schedule `protobuf:"bytes,1,rep,name=Schedules,proto3" json:"Schedules,omitempty"`
-	LastEvaluatedKey     string      `protobuf:"bytes,2,opt,name=LastEvaluatedKey,proto3" json:"LastEvaluatedKey,omitempty"`
-	ResultLength         int32       `protobuf:"varint,3,opt,name=ResultLength,proto3" json:"ResultLength,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+type GetArrivalEstimatesResponse struct {
+	ArrivalEstimates     []*ArrivalEstimate `protobuf:"bytes,1,rep,name=ArrivalEstimates,proto3" json:"ArrivalEstimates,omitempty"`
+	LastEvaluatedKey     string             `protobuf:"bytes,2,opt,name=LastEvaluatedKey,proto3" json:"LastEvaluatedKey,omitempty"`
+	ResultLength         int32              `protobuf:"varint,3,opt,name=ResultLength,proto3" json:"ResultLength,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *GetScheduleResponse) Reset()         { *m = GetScheduleResponse{} }
-func (m *GetScheduleResponse) String() string { return proto.CompactTextString(m) }
-func (*GetScheduleResponse) ProtoMessage()    {}
-func (*GetScheduleResponse) Descriptor() ([]byte, []int) {
+func (m *GetArrivalEstimatesResponse) Reset()         { *m = GetArrivalEstimatesResponse{} }
+func (m *GetArrivalEstimatesResponse) String() string { return proto.CompactTextString(m) }
+func (*GetArrivalEstimatesResponse) ProtoMessage()    {}
+func (*GetArrivalEstimatesResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d00842e68e05382a, []int{2}
 }
 
-func (m *GetScheduleResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetScheduleResponse.Unmarshal(m, b)
+func (m *GetArrivalEstimatesResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetArrivalEstimatesResponse.Unmarshal(m, b)
 }
-func (m *GetScheduleResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetScheduleResponse.Marshal(b, m, deterministic)
+func (m *GetArrivalEstimatesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetArrivalEstimatesResponse.Marshal(b, m, deterministic)
 }
-func (m *GetScheduleResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetScheduleResponse.Merge(m, src)
+func (m *GetArrivalEstimatesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetArrivalEstimatesResponse.Merge(m, src)
 }
-func (m *GetScheduleResponse) XXX_Size() int {
-	return xxx_messageInfo_GetScheduleResponse.Size(m)
+func (m *GetArrivalEstimatesResponse) XXX_Size() int {
+	return xxx_messageInfo_GetArrivalEstimatesResponse.Size(m)
 }
-func (m *GetScheduleResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetScheduleResponse.DiscardUnknown(m)
+func (m *GetArrivalEstimatesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetArrivalEstimatesResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetScheduleResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetArrivalEstimatesResponse proto.InternalMessageInfo
 
-func (m *GetScheduleResponse) GetSchedules() []*Schedule {
+func (m *GetArrivalEstimatesResponse) GetArrivalEstimates() []*ArrivalEstimate {
 	if m != nil {
-		return m.Schedules
+		return m.ArrivalEstimates
 	}
 	return nil
 }
 
-func (m *GetScheduleResponse) GetLastEvaluatedKey() string {
+func (m *GetArrivalEstimatesResponse) GetLastEvaluatedKey() string {
 	if m != nil {
 		return m.LastEvaluatedKey
 	}
 	return ""
 }
 
-func (m *GetScheduleResponse) GetResultLength() int32 {
+func (m *GetArrivalEstimatesResponse) GetResultLength() int32 {
 	if m != nil {
 		return m.ResultLength
 	}
@@ -280,46 +280,47 @@ func (m *GetScheduleResponse) GetResultLength() int32 {
 }
 
 func init() {
-	proto.RegisterType((*GetScheduleRequest)(nil), "schedule.GetScheduleRequest")
-	proto.RegisterType((*Schedule)(nil), "schedule.Schedule")
-	proto.RegisterType((*GetScheduleResponse)(nil), "schedule.GetScheduleResponse")
+	proto.RegisterType((*GetArrivalEstimatesRequest)(nil), "schedule.GetArrivalEstimatesRequest")
+	proto.RegisterType((*ArrivalEstimate)(nil), "schedule.ArrivalEstimate")
+	proto.RegisterType((*GetArrivalEstimatesResponse)(nil), "schedule.GetArrivalEstimatesResponse")
 }
 
 func init() { proto.RegisterFile("schedule.proto", fileDescriptor_d00842e68e05382a) }
 
 var fileDescriptor_d00842e68e05382a = []byte{
-	// 482 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x53, 0xc1, 0x8e, 0xd3, 0x30,
-	0x10, 0x55, 0xda, 0xdd, 0x6d, 0x3b, 0x5d, 0x2d, 0x95, 0x11, 0x92, 0x55, 0x0a, 0x54, 0x39, 0xa0,
-	0x6a, 0x25, 0x1a, 0x28, 0x1c, 0x10, 0x37, 0xa4, 0x56, 0x08, 0x51, 0x21, 0x94, 0x54, 0xe2, 0xec,
-	0x6d, 0x87, 0xac, 0xa5, 0xd4, 0x29, 0xf6, 0x24, 0x62, 0x39, 0xf2, 0x0b, 0x1c, 0xf8, 0x30, 0x7e,
-	0x81, 0x03, 0x07, 0x3e, 0x02, 0xc5, 0x4e, 0x36, 0xe9, 0x76, 0x11, 0x37, 0xcf, 0x7b, 0x6f, 0xfc,
-	0x9e, 0x3d, 0x36, 0x9c, 0x99, 0xf5, 0x25, 0x6e, 0xb2, 0x04, 0xa7, 0x3b, 0x9d, 0x52, 0xca, 0xba,
-	0x55, 0x3d, 0x7c, 0x14, 0xa7, 0x69, 0x9c, 0x60, 0x60, 0xf1, 0x8b, 0xec, 0x53, 0x40, 0x72, 0x8b,
-	0x86, 0xc4, 0x76, 0xe7, 0xa4, 0xc3, 0x51, 0x29, 0x10, 0x3b, 0x19, 0x08, 0xa5, 0x52, 0x12, 0x24,
-	0x53, 0x65, 0x1c, 0xeb, 0xff, 0xf1, 0x80, 0xbd, 0x41, 0x8a, 0xca, 0xed, 0x42, 0xfc, 0x9c, 0xa1,
-	0x21, 0xf6, 0x12, 0x7a, 0x11, 0x09, 0x4d, 0x73, 0x41, 0xc8, 0xbd, 0xb1, 0x37, 0xe9, 0xcf, 0x86,
-	0x53, 0xb7, 0xd1, 0xb4, 0x72, 0x9a, 0xae, 0x2a, 0xa7, 0xb0, 0x16, 0xb3, 0x17, 0xd0, 0x59, 0xa8,
-	0x8d, 0xed, 0x6b, 0xfd, 0xb7, 0xaf, 0x92, 0x32, 0x0e, 0x9d, 0xc8, 0x05, 0xe3, 0xed, 0xb1, 0x37,
-	0xe9, 0x85, 0x55, 0xc9, 0xc6, 0xd0, 0x9f, 0xa3, 0x21, 0xa9, 0x1c, 0x7b, 0x64, 0xd9, 0x26, 0xc4,
-	0xce, 0x61, 0xb0, 0x14, 0x86, 0x16, 0xb9, 0x48, 0x32, 0x41, 0xb8, 0x79, 0x87, 0x57, 0xfc, 0xd8,
-	0xca, 0x0e, 0x70, 0xff, 0x77, 0x0b, 0xba, 0xd5, 0x59, 0xd9, 0x43, 0x80, 0x0f, 0x5a, 0x6e, 0x85,
-	0xbe, 0x2a, 0x5a, 0x3c, 0xdb, 0xd2, 0x40, 0x6c, 0xa8, 0x54, 0x53, 0x41, 0xb6, 0xca, 0x50, 0xae,
-	0xbc, 0x19, 0xaa, 0x7d, 0x18, 0x6a, 0x04, 0xbd, 0xb9, 0xd4, 0xb8, 0x6e, 0x84, 0xae, 0x81, 0x82,
-	0x5d, 0xe4, 0xa8, 0xa8, 0xb8, 0x89, 0x32, 0x6b, 0x0d, 0x30, 0x06, 0x47, 0x4b, 0xa9, 0x90, 0x9f,
-	0x58, 0xc2, 0xae, 0x0b, 0xc7, 0xf7, 0xf8, 0x85, 0x5e, 0x6b, 0x2d, 0x73, 0x91, 0xf0, 0x8e, 0x73,
-	0x6c, 0x40, 0xcd, 0x2b, 0xec, 0xee, 0x5f, 0x21, 0x87, 0xce, 0x4a, 0x0b, 0xa9, 0xde, 0xce, 0x79,
-	0xcf, 0x31, 0x65, 0xc9, 0x1e, 0xc3, 0xd9, 0x47, 0x21, 0x49, 0xaa, 0x38, 0xc2, 0x75, 0xaa, 0x36,
-	0x86, 0x83, 0x15, 0xdc, 0x40, 0x0b, 0xf7, 0x12, 0xb1, 0x89, 0xfb, 0xce, 0xbd, 0x01, 0xb1, 0x01,
-	0xb4, 0x57, 0xab, 0x25, 0x3f, 0x1d, 0x7b, 0x93, 0x76, 0x58, 0x2c, 0xfd, 0x1f, 0x1e, 0xdc, 0xdd,
-	0x7b, 0x59, 0x66, 0x97, 0x2a, 0x83, 0xec, 0x29, 0xf4, 0x2a, 0xcc, 0x70, 0x6f, 0xdc, 0x9e, 0xf4,
-	0x67, 0x6c, 0x7a, 0xfd, 0xbc, 0xaf, 0xe5, 0xb5, 0xe8, 0xd6, 0x01, 0xb7, 0x6e, 0x1f, 0x30, 0xf3,
-	0xe1, 0x34, 0x44, 0x93, 0x25, 0xb4, 0x44, 0x15, 0xd3, 0xa5, 0x1d, 0xcd, 0x71, 0xb8, 0x87, 0xcd,
-	0xbe, 0xc2, 0x9d, 0x6a, 0xf3, 0x08, 0x75, 0x2e, 0xd7, 0xc8, 0x62, 0xe8, 0x37, 0xb2, 0xb2, 0x51,
-	0x1d, 0xe8, 0xf0, 0x73, 0x0c, 0x1f, 0xfc, 0x83, 0x75, 0x07, 0xf4, 0xef, 0x7f, 0xfb, 0xf9, 0xeb,
-	0x7b, 0xeb, 0x9e, 0x3f, 0x08, 0xf2, 0x67, 0x41, 0x8c, 0xf4, 0xa4, 0x52, 0xbf, 0xf2, 0xce, 0x2f,
-	0x4e, 0xec, 0x2f, 0x78, 0xfe, 0x37, 0x00, 0x00, 0xff, 0xff, 0xeb, 0x10, 0xcb, 0xfe, 0xd1, 0x03,
-	0x00, 0x00,
+	// 499 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x53, 0xc1, 0x6e, 0xd3, 0x40,
+	0x10, 0xd5, 0x26, 0x6d, 0xd3, 0x4c, 0xaa, 0x36, 0x5a, 0x2e, 0xdb, 0x50, 0x95, 0xc8, 0x2a, 0x28,
+	0xaa, 0xd4, 0x44, 0x04, 0x0e, 0x88, 0x1b, 0x52, 0x22, 0x84, 0x88, 0x10, 0x72, 0x22, 0x71, 0xde,
+	0x26, 0x43, 0xba, 0x92, 0xb3, 0x0e, 0xbb, 0x63, 0x8b, 0x5e, 0x39, 0x71, 0xe7, 0xca, 0x67, 0xf0,
+	0x27, 0xfc, 0x02, 0x77, 0x2e, 0x7c, 0x00, 0xf2, 0xae, 0x4d, 0x5c, 0x27, 0xa8, 0x37, 0xcf, 0x7b,
+	0x6f, 0xfc, 0xde, 0xce, 0xce, 0xc2, 0xb1, 0x9d, 0xdf, 0xe0, 0x22, 0x89, 0xb0, 0xbf, 0x36, 0x31,
+	0xc5, 0xfc, 0xb0, 0xa8, 0x3b, 0x8f, 0x96, 0x71, 0xbc, 0x8c, 0x70, 0xe0, 0xf0, 0xeb, 0xe4, 0xe3,
+	0x80, 0xd4, 0x0a, 0x2d, 0xc9, 0xd5, 0xda, 0x4b, 0x3b, 0x67, 0xb9, 0x40, 0xae, 0xd5, 0x40, 0x6a,
+	0x1d, 0x93, 0x24, 0x15, 0x6b, 0xeb, 0xd9, 0xe0, 0x0f, 0x83, 0xce, 0x6b, 0xa4, 0x57, 0xc6, 0xa8,
+	0x54, 0x46, 0x63, 0x4b, 0x6a, 0x25, 0x09, 0x6d, 0x88, 0x9f, 0x12, 0xb4, 0xc4, 0x5f, 0x40, 0x73,
+	0x4a, 0xd2, 0xd0, 0x48, 0x12, 0x0a, 0xd6, 0x65, 0xbd, 0xd6, 0xb0, 0xd3, 0xf7, 0x3f, 0xec, 0x17,
+	0x8e, 0xfd, 0x59, 0xe1, 0x18, 0x6e, 0xc4, 0xfc, 0x39, 0x34, 0xc6, 0x7a, 0xe1, 0xfa, 0x6a, 0xf7,
+	0xf6, 0x15, 0x52, 0x2e, 0xa0, 0x31, 0xf5, 0x01, 0x45, 0xbd, 0xcb, 0x7a, 0xcd, 0xb0, 0x28, 0x79,
+	0x17, 0x5a, 0x23, 0xb4, 0xa4, 0xb4, 0x67, 0xf7, 0x1c, 0x5b, 0x86, 0xf8, 0x25, 0xb4, 0x27, 0xd2,
+	0xd2, 0x38, 0x95, 0x51, 0x22, 0x09, 0x17, 0x6f, 0xf1, 0x56, 0xec, 0x3b, 0xd9, 0x16, 0x1e, 0xfc,
+	0xae, 0xc1, 0x49, 0xe5, 0xcc, 0xfc, 0x1c, 0xe0, 0xbd, 0x51, 0x2b, 0x69, 0x6e, 0xb3, 0x4e, 0xe6,
+	0x3a, 0x4b, 0x88, 0xcb, 0x16, 0x1b, 0xca, 0xc8, 0x5a, 0x9e, 0xcd, 0x97, 0xd5, 0x6c, 0xf5, 0xed,
+	0x6c, 0x67, 0xd0, 0x1c, 0x29, 0x83, 0xf3, 0x52, 0xf6, 0x0d, 0x90, 0xb1, 0xe3, 0x14, 0x35, 0x65,
+	0x03, 0xc9, 0x23, 0x6f, 0x00, 0xce, 0x61, 0x6f, 0xa2, 0x34, 0x8a, 0x03, 0x47, 0xb8, 0xef, 0xcc,
+	0xf1, 0x1d, 0x7e, 0x2e, 0xae, 0x4d, 0x34, 0xbc, 0x63, 0x09, 0x2a, 0x4f, 0xf2, 0xf0, 0xee, 0x24,
+	0x05, 0x34, 0x66, 0x46, 0x2a, 0xfd, 0x66, 0x24, 0x9a, 0x9e, 0xc9, 0x4b, 0xfe, 0x04, 0x8e, 0x3f,
+	0x48, 0x45, 0x4a, 0x2f, 0xa7, 0x38, 0x8f, 0xf5, 0xc2, 0x0a, 0x70, 0x82, 0x0a, 0x9a, 0xb9, 0xe7,
+	0x88, 0x4b, 0xdc, 0xf2, 0xee, 0x25, 0x88, 0xb7, 0xa1, 0x3e, 0x9b, 0x4d, 0xc4, 0x51, 0x97, 0xf5,
+	0xea, 0x61, 0xf6, 0x19, 0xfc, 0x60, 0xf0, 0x70, 0xe7, 0xa2, 0xd9, 0x75, 0xac, 0x2d, 0xf2, 0x31,
+	0xb4, 0xab, 0x9c, 0x60, 0xdd, 0x7a, 0xaf, 0x35, 0x3c, 0xed, 0xff, 0x5b, 0xfe, 0x8a, 0x22, 0xdc,
+	0x6a, 0xd9, 0xb9, 0x04, 0xb5, 0xdd, 0x4b, 0xc0, 0x03, 0x38, 0x0a, 0xd1, 0x26, 0x11, 0x4d, 0x50,
+	0x2f, 0xe9, 0xc6, 0xdd, 0xdb, 0x7e, 0x78, 0x07, 0x1b, 0x7e, 0x67, 0x70, 0x32, 0xcd, 0xed, 0xa7,
+	0x68, 0x52, 0x35, 0x47, 0xfe, 0x95, 0xc1, 0x83, 0x1d, 0x47, 0xe1, 0x17, 0x9b, 0xa0, 0xff, 0x7f,
+	0x52, 0x9d, 0xc7, 0xf7, 0xa8, 0xfc, 0x3c, 0x82, 0x8b, 0x2f, 0x3f, 0x7f, 0x7d, 0xab, 0x9d, 0x07,
+	0xa7, 0x83, 0xf4, 0xe9, 0x60, 0x89, 0x74, 0x25, 0xbd, 0xf2, 0x0a, 0x0b, 0xe9, 0x4b, 0x76, 0x79,
+	0x7d, 0xe0, 0x1e, 0xd3, 0xb3, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0xc3, 0xa1, 0xc7, 0x94, 0x20,
+	0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -334,7 +335,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ScheduleServiceClient interface {
-	GetSchedule(ctx context.Context, in *GetScheduleRequest, opts ...grpc.CallOption) (*GetScheduleResponse, error)
+	GetArrivalEstimates(ctx context.Context, in *GetArrivalEstimatesRequest, opts ...grpc.CallOption) (*GetArrivalEstimatesResponse, error)
 }
 
 type scheduleServiceClient struct {
@@ -345,9 +346,9 @@ func NewScheduleServiceClient(cc *grpc.ClientConn) ScheduleServiceClient {
 	return &scheduleServiceClient{cc}
 }
 
-func (c *scheduleServiceClient) GetSchedule(ctx context.Context, in *GetScheduleRequest, opts ...grpc.CallOption) (*GetScheduleResponse, error) {
-	out := new(GetScheduleResponse)
-	err := c.cc.Invoke(ctx, "/schedule.ScheduleService/GetSchedule", in, out, opts...)
+func (c *scheduleServiceClient) GetArrivalEstimates(ctx context.Context, in *GetArrivalEstimatesRequest, opts ...grpc.CallOption) (*GetArrivalEstimatesResponse, error) {
+	out := new(GetArrivalEstimatesResponse)
+	err := c.cc.Invoke(ctx, "/schedule.ScheduleService/GetArrivalEstimates", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -356,35 +357,35 @@ func (c *scheduleServiceClient) GetSchedule(ctx context.Context, in *GetSchedule
 
 // ScheduleServiceServer is the server API for ScheduleService service.
 type ScheduleServiceServer interface {
-	GetSchedule(context.Context, *GetScheduleRequest) (*GetScheduleResponse, error)
+	GetArrivalEstimates(context.Context, *GetArrivalEstimatesRequest) (*GetArrivalEstimatesResponse, error)
 }
 
 // UnimplementedScheduleServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedScheduleServiceServer struct {
 }
 
-func (*UnimplementedScheduleServiceServer) GetSchedule(ctx context.Context, req *GetScheduleRequest) (*GetScheduleResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSchedule not implemented")
+func (*UnimplementedScheduleServiceServer) GetArrivalEstimates(ctx context.Context, req *GetArrivalEstimatesRequest) (*GetArrivalEstimatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetArrivalEstimates not implemented")
 }
 
 func RegisterScheduleServiceServer(s *grpc.Server, srv ScheduleServiceServer) {
 	s.RegisterService(&_ScheduleService_serviceDesc, srv)
 }
 
-func _ScheduleService_GetSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetScheduleRequest)
+func _ScheduleService_GetArrivalEstimates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetArrivalEstimatesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScheduleServiceServer).GetSchedule(ctx, in)
+		return srv.(ScheduleServiceServer).GetArrivalEstimates(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/schedule.ScheduleService/GetSchedule",
+		FullMethod: "/schedule.ScheduleService/GetArrivalEstimates",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScheduleServiceServer).GetSchedule(ctx, req.(*GetScheduleRequest))
+		return srv.(ScheduleServiceServer).GetArrivalEstimates(ctx, req.(*GetArrivalEstimatesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -394,8 +395,8 @@ var _ScheduleService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*ScheduleServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetSchedule",
-			Handler:    _ScheduleService_GetSchedule_Handler,
+			MethodName: "GetArrivalEstimates",
+			Handler:    _ScheduleService_GetArrivalEstimates_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

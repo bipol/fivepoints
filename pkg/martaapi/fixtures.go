@@ -1,6 +1,6 @@
 package martaapi
 
-const ValidScheduleJSON = `
+const ValidArrivalEstimateJSON = `
 [
   {
     "DESTINATION": "Doraville",
@@ -26,8 +26,8 @@ const ValidScheduleJSON = `
   }
 ]`
 
-var ValidScheduleExpectation = []Schedule{
-	Schedule{
+var ValidScheduleExpectation = []ArrivalEstimate{
+	ArrivalEstimate{
 		Destination:    "Doraville",
 		Direction:      "N",
 		EventTime:      "5/11/2019 5:48:05 PM",
@@ -38,7 +38,7 @@ var ValidScheduleExpectation = []Schedule{
 		WaitingSeconds: "-16",
 		WaitingTime:    "Boarding",
 	},
-	Schedule{
+	ArrivalEstimate{
 		Destination:    "Hamilton E Holmes",
 		Direction:      "W",
 		EventTime:      "5/11/2019 5:48:17 PM",

@@ -9,12 +9,12 @@ import (
 )
 
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . ScheduleFinder
-type ScheduleFinder interface {
-	FindSchedules(ctx context.Context) (io.ReadCloser, error)
+type ArrivalEstimatesFinder interface {
+	FindArrivalEstimates(ctx context.Context) (io.ReadCloser, error)
 	Prefix() string
 }
 
-type Schedule struct {
+type ArrivalEstimate struct {
 	PrimaryKey     string
 	SortKey        string
 	Destination    string `json:"DESTINATION"`
@@ -74,8 +74,8 @@ func (c Client) buildRequest(method string, path string) (*http.Request, error) 
 	return req, err
 }
 
-// FindSchedules will retrieve a set of schedules
-func (c Client) FindSchedules(ctx context.Context) (io.ReadCloser, error) {
+// FindArrivalEstimates will retrieve a set of schedules
+func (c Client) FindArrivalEstimates(ctx context.Context) (io.ReadCloser, error) {
 	var (
 		err error
 	)

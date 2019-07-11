@@ -4,7 +4,7 @@ import "google/api/annotations.proto";
 
 package schedule;
 
-message GetScheduleRequest {
+message GetArrivalEstimatesRequest {
     google.protobuf.Timestamp StartDate = 1;
     google.protobuf.Timestamp EndDate = 2;
     string Station = 3;
@@ -12,7 +12,7 @@ message GetScheduleRequest {
     string LastEvaluatedKey = 5;
 }
 
-message Schedule {
+message ArrivalEstimate {
     string PrimaryKey = 1;
     string SortKey = 2;
     string Destination = 3;
@@ -27,16 +27,16 @@ message Schedule {
     int64 TTL = 12;
 }
 
-message GetScheduleResponse {
-  repeated Schedule Schedules = 1;
+message GetArrivalEstimatesResponse {
+  repeated ArrivalEstimate ArrivalEstimates = 1;
   string LastEvaluatedKey = 2;
   int32 ResultLength = 3;
 }
 
 service ScheduleService {
-    rpc GetSchedule(GetScheduleRequest) returns (GetScheduleResponse) {
+    rpc GetArrivalEstimates(GetArrivalEstimatesRequest) returns (GetArrivalEstimatesResponse) {
 	option (google.api.http) = {
-	    post: "/v1/get-schedule"
+	    post: "/v1/get-arrival-estimates"
 	    body: "*"
 	};
     }

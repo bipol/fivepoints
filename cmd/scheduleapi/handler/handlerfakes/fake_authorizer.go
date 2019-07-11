@@ -2,10 +2,10 @@
 package handlerfakes
 
 import (
-	"context"
-	"sync"
+	context "context"
+	sync "sync"
 
-	"github.com/smartatransit/fivepoints/cmd/scheduleapi/handler"
+	handler "github.com/smartatransit/fivepoints/cmd/scheduleapi/handler"
 )
 
 type FakeAuthorizer struct {

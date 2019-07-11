@@ -15,7 +15,7 @@ type API interface {
 }
 
 type Server struct {
-	GetScheduleEndpoint
+	GetArrivalEstimatesEndpoint
 }
 
 func NewWithDefaultEndpoints(
@@ -23,24 +23,24 @@ func NewWithDefaultEndpoints(
 	querier DynamoQuerier,
 	authorizer Authorizer,
 ) *Server {
-	getScheduleEndpoint := NewGetScheduleEndpoint(tableName, querier, authorizer)
+	getScheduleEndpoint := NewGetArrivalEstimatesEndpoint(tableName, querier, authorizer)
 	return &Server{
 		getScheduleEndpoint,
 	}
 }
 
 type envelope struct {
-	Response *schedule.GetScheduleResponse
+	Response *schedule.GetArrivalEstimatesResponse
 	Err      error
 }
 
-func (s *Server) GetSchedule(ctx context.Context, in *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
+func (s *Server) GetArrivalEstimates(ctx context.Context, in *schedule.GetArrivalEstimatesRequest) (*schedule.GetArrivalEstimatesResponse, error) {
 	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
 	respChan := make(chan envelope, 1)
 	defer cancel()
 	go func() {
 		defer close(respChan)
-		resp, err := s.GetScheduleEndpoint(ctx, in)
+		resp, err := s.GetArrivalEstimatesEndpoint(ctx, in)
 		respChan <- envelope{
 			resp,
 			err,

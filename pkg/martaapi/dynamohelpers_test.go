@@ -12,7 +12,7 @@ import (
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gstruct"
 
-	"github.com/bipol/scrapedumper/pkg/martaapi"
+	"github.com/smartatransit/fivepoints/pkg/martaapi"
 )
 
 var _ = Describe("Dynamohelpers", func() {
@@ -25,10 +25,10 @@ var _ = Describe("Dynamohelpers", func() {
 		BeforeEach(func() {
 			err = nil
 			batchInput = nil
-			r = strings.NewReader(martaapi.ValidScheduleJSON)
+			r = strings.NewReader(martaapi.ValidArrivalEstimateJSON)
 		})
 		JustBeforeEach(func() {
-			batchInput, err = martaapi.DigestScheduleResponse(r, "t")
+			batchInput, err = martaapi.DigestArrivalEstimateResponse(r, "t")
 		})
 		When("given an invalid response", func() {
 			BeforeEach(func() {
@@ -69,15 +69,15 @@ var _ = Describe("Dynamohelpers", func() {
 			})
 		})
 	})
-	Context("ScheduleToWriteRequest", func() {
+	Context("ArrivalEstimateToWriteRequest", func() {
 		var (
-			s   martaapi.Schedule
+			s   martaapi.ArrivalEstimate
 			wr  *dynamodb.WriteRequest
 			err error
 		)
 		BeforeEach(func() {
 			err = nil
-			s = martaapi.Schedule{
+			s = martaapi.ArrivalEstimate{
 				Destination:    "destination",
 				Direction:      "direction",
 				EventTime:      "5/14/2019 5:50:52 PM",
@@ -91,7 +91,7 @@ var _ = Describe("Dynamohelpers", func() {
 			wr = nil
 		})
 		JustBeforeEach(func() {
-			wr, err = martaapi.ScheduleToWriteRequest(s, "table")
+			wr, err = martaapi.ArrivalEstimateToWriteRequest(s, "table")
 		})
 		When("given an invalid eventtime", func() {
 			BeforeEach(func() {

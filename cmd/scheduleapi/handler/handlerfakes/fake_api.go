@@ -2,92 +2,92 @@
 package handlerfakes
 
 import (
-	"context"
-	"sync"
+	context "context"
+	sync "sync"
 
-	"github.com/smartatransit/fivepoints/api/v1/schedule"
-	"github.com/smartatransit/fivepoints/cmd/scheduleapi/handler"
+	schedule "github.com/smartatransit/fivepoints/api/v1/schedule"
+	handler "github.com/smartatransit/fivepoints/cmd/scheduleapi/handler"
 )
 
 type FakeAPI struct {
-	GetScheduleStub        func(context.Context, *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error)
-	getScheduleMutex       sync.RWMutex
-	getScheduleArgsForCall []struct {
+	GetArrivalEstimatesStub        func(context.Context, *schedule.GetArrivalEstimatesRequest) (*schedule.GetArrivalEstimatesResponse, error)
+	getArrivalEstimatesMutex       sync.RWMutex
+	getArrivalEstimatesArgsForCall []struct {
 		arg1 context.Context
-		arg2 *schedule.GetScheduleRequest
+		arg2 *schedule.GetArrivalEstimatesRequest
 	}
-	getScheduleReturns struct {
-		result1 *schedule.GetScheduleResponse
+	getArrivalEstimatesReturns struct {
+		result1 *schedule.GetArrivalEstimatesResponse
 		result2 error
 	}
-	getScheduleReturnsOnCall map[int]struct {
-		result1 *schedule.GetScheduleResponse
+	getArrivalEstimatesReturnsOnCall map[int]struct {
+		result1 *schedule.GetArrivalEstimatesResponse
 		result2 error
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeAPI) GetSchedule(arg1 context.Context, arg2 *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error) {
-	fake.getScheduleMutex.Lock()
-	ret, specificReturn := fake.getScheduleReturnsOnCall[len(fake.getScheduleArgsForCall)]
-	fake.getScheduleArgsForCall = append(fake.getScheduleArgsForCall, struct {
+func (fake *FakeAPI) GetArrivalEstimates(arg1 context.Context, arg2 *schedule.GetArrivalEstimatesRequest) (*schedule.GetArrivalEstimatesResponse, error) {
+	fake.getArrivalEstimatesMutex.Lock()
+	ret, specificReturn := fake.getArrivalEstimatesReturnsOnCall[len(fake.getArrivalEstimatesArgsForCall)]
+	fake.getArrivalEstimatesArgsForCall = append(fake.getArrivalEstimatesArgsForCall, struct {
 		arg1 context.Context
-		arg2 *schedule.GetScheduleRequest
+		arg2 *schedule.GetArrivalEstimatesRequest
 	}{arg1, arg2})
-	fake.recordInvocation("GetSchedule", []interface{}{arg1, arg2})
-	fake.getScheduleMutex.Unlock()
-	if fake.GetScheduleStub != nil {
-		return fake.GetScheduleStub(arg1, arg2)
+	fake.recordInvocation("GetArrivalEstimates", []interface{}{arg1, arg2})
+	fake.getArrivalEstimatesMutex.Unlock()
+	if fake.GetArrivalEstimatesStub != nil {
+		return fake.GetArrivalEstimatesStub(arg1, arg2)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getScheduleReturns
+	fakeReturns := fake.getArrivalEstimatesReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeAPI) GetScheduleCallCount() int {
-	fake.getScheduleMutex.RLock()
-	defer fake.getScheduleMutex.RUnlock()
-	return len(fake.getScheduleArgsForCall)
+func (fake *FakeAPI) GetArrivalEstimatesCallCount() int {
+	fake.getArrivalEstimatesMutex.RLock()
+	defer fake.getArrivalEstimatesMutex.RUnlock()
+	return len(fake.getArrivalEstimatesArgsForCall)
 }
 
-func (fake *FakeAPI) GetScheduleCalls(stub func(context.Context, *schedule.GetScheduleRequest) (*schedule.GetScheduleResponse, error)) {
-	fake.getScheduleMutex.Lock()
-	defer fake.getScheduleMutex.Unlock()
-	fake.GetScheduleStub = stub
+func (fake *FakeAPI) GetArrivalEstimatesCalls(stub func(context.Context, *schedule.GetArrivalEstimatesRequest) (*schedule.GetArrivalEstimatesResponse, error)) {
+	fake.getArrivalEstimatesMutex.Lock()
+	defer fake.getArrivalEstimatesMutex.Unlock()
+	fake.GetArrivalEstimatesStub = stub
 }
 
-func (fake *FakeAPI) GetScheduleArgsForCall(i int) (context.Context, *schedule.GetScheduleRequest) {
-	fake.getScheduleMutex.RLock()
-	defer fake.getScheduleMutex.RUnlock()
-	argsForCall := fake.getScheduleArgsForCall[i]
+func (fake *FakeAPI) GetArrivalEstimatesArgsForCall(i int) (context.Context, *schedule.GetArrivalEstimatesRequest) {
+	fake.getArrivalEstimatesMutex.RLock()
+	defer fake.getArrivalEstimatesMutex.RUnlock()
+	argsForCall := fake.getArrivalEstimatesArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeAPI) GetScheduleReturns(result1 *schedule.GetScheduleResponse, result2 error) {
-	fake.getScheduleMutex.Lock()
-	defer fake.getScheduleMutex.Unlock()
-	fake.GetScheduleStub = nil
-	fake.getScheduleReturns = struct {
-		result1 *schedule.GetScheduleResponse
+func (fake *FakeAPI) GetArrivalEstimatesReturns(result1 *schedule.GetArrivalEstimatesResponse, result2 error) {
+	fake.getArrivalEstimatesMutex.Lock()
+	defer fake.getArrivalEstimatesMutex.Unlock()
+	fake.GetArrivalEstimatesStub = nil
+	fake.getArrivalEstimatesReturns = struct {
+		result1 *schedule.GetArrivalEstimatesResponse
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeAPI) GetScheduleReturnsOnCall(i int, result1 *schedule.GetScheduleResponse, result2 error) {
-	fake.getScheduleMutex.Lock()
-	defer fake.getScheduleMutex.Unlock()
-	fake.GetScheduleStub = nil
-	if fake.getScheduleReturnsOnCall == nil {
-		fake.getScheduleReturnsOnCall = make(map[int]struct {
-			result1 *schedule.GetScheduleResponse
+func (fake *FakeAPI) GetArrivalEstimatesReturnsOnCall(i int, result1 *schedule.GetArrivalEstimatesResponse, result2 error) {
+	fake.getArrivalEstimatesMutex.Lock()
+	defer fake.getArrivalEstimatesMutex.Unlock()
+	fake.GetArrivalEstimatesStub = nil
+	if fake.getArrivalEstimatesReturnsOnCall == nil {
+		fake.getArrivalEstimatesReturnsOnCall = make(map[int]struct {
+			result1 *schedule.GetArrivalEstimatesResponse
 			result2 error
 		})
 	}
-	fake.getScheduleReturnsOnCall[i] = struct {
-		result1 *schedule.GetScheduleResponse
+	fake.getArrivalEstimatesReturnsOnCall[i] = struct {
+		result1 *schedule.GetArrivalEstimatesResponse
 		result2 error
 	}{result1, result2}
 }
@@ -95,8 +95,8 @@ func (fake *FakeAPI) GetScheduleReturnsOnCall(i int, result1 *schedule.GetSchedu
 func (fake *FakeAPI) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.getScheduleMutex.RLock()
-	defer fake.getScheduleMutex.RUnlock()
+	fake.getArrivalEstimatesMutex.RLock()
+	defer fake.getArrivalEstimatesMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
