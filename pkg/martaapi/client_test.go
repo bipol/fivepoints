@@ -34,7 +34,6 @@ var _ = Describe("Client", func() {
 	JustBeforeEach(func() {
 		doer.DoReturns(resp, retErr)
 		logger, _ := zap.NewProduction()
-		defer logger.Sync()
 		client = New(
 			doer,
 			apiKey,
