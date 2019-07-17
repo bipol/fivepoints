@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>api</title>
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/highlight.dark.css">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="/">
+                api
+                <small class="hidden-xs hidden-sm">
+                    get arrival estimates
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="get-arrival-estimates">Get Arrival Estimates</h1>
+<p>Allows a user to specify a <code>StartDate</code> and <code>EndDate</code>, which creates an <code>EVENT_TIME</code> period. Only events within this bound will be returned. We have a deadline 1 second currently, and will return a Deadline Exceeded error if we can't return results within that time period.</p>
+<h2 id="request">Request</h2>
+<pre><code class="language-protobuf">message GetArrivalEstimatesRequest {
+    google.protobuf.Timestamp StartDate = 1;
+    google.protobuf.Timestamp EndDate = 2;
+    string Station = 3;
+    string Destination = 4;
+    string LastEvaluatedKey = 5;
+}</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StartDate</td>
+<td>Must be <code>RFC3339</code>, and same date as end date</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td>EndDate</td>
+<td>Must be <code>RFC3339</code>, and same date as start date</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td>Station</td>
+<td>MARTA Station whose event times you are querying for</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td>Destination</td>
+<td>The destination station of the line you are querying for</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td>LastEvaluatedKey</td>
+<td>Provided in response, used to page through results</td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<pre><code class="language-protobuf">message GetArrivalEstimatesResponse {
+  repeated ArrivalEstimate ArrivalEstimates = 1;
+  string LastEvaluatedKey = 2;
+  int32 ResultLength = 3;
+}
+
+message ArrivalEstimate {
+    string PrimaryKey = 1;
+    string SortKey = 2;
+    string Destination = 3;
+    string Direction = 4;
+    string EventTime = 5;
+    string Line = 6;
+    string NextArrival = 7;
+    string Station = 8;
+    string TrainID = 9;
+    string WaitingSeconds = 10;
+    string WaitingTime = 11;
+    int64 TTL = 12;
+}</code></pre>
+<h2 id="authentication">Authentication</h2>
+<p>This endpoint requires an <code>Authorization: Bearer jwt</code> header, with claim <code>fvp.Do</code> present.</p>
+<p>If it does not exist, the caller will not be able to retrieve any information.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
