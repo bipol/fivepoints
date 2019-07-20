@@ -1,1 +1,1 @@
-worker: bin/fivepoints
+web: bin/fivepoints
