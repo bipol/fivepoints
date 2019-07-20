@@ -27,7 +27,7 @@ type options struct {
 	JWTSigningSecret string `long:"jwt-signing-secret" env:"JWT_SIGNING_SECRET" description:"the jwt signing secret" required:"true"`
 	DynamoTableName  string `long:"dynamo-table-name" env:"DYNAMO_TABLE_NAME" description:"dynamo table name"`
 	GRPCPort         int    `long:"grpc-port" env:"GRPC_PORT" description:"port that the grpc server will be started" required:"true"`
-	RESTPort         int    `long:"rest-port" env:"REST_PORT" description:"port that the rest server will be started" required:"true"`
+	RESTPort         int    `long:"rest-port" env:"PORT" description:"port that the rest server will be started" required:"true"`
 }
 
 func main() {
