@@ -2,6 +2,7 @@
 <img src="https://user-images.githubusercontent.com/8289478/56633099-d6357d00-662a-11e9-9592-0c58dab8ca55.png" width="300" height="72" />
 
 `fivepoints` is `SMARTA`s window into the data we are collecting.
+https://smartatransit.github.io/fivepoints/
 
 It is an API that will expose data living in dynamo, and in the future, likely other data sources.
 

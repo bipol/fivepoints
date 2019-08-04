@@ -1,0 +1,43 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+package schedule;
+
+message GetArrivalEstimatesRequest {
+    google.protobuf.Timestamp StartDate = 1;
+    google.protobuf.Timestamp EndDate = 2;
+    string Station = 3;
+    string Destination = 4;
+    string LastEvaluatedKey = 5;
+}
+
+message ArrivalEstimate {
+    string PrimaryKey = 1;
+    string SortKey = 2;
+    string Destination = 3;
+    string Direction = 4;
+    string EventTime = 5;
+    string Line = 6;
+    string NextArrival = 7;
+    string Station = 8;
+    string TrainID = 9;
+    string WaitingSeconds = 10;
+    string WaitingTime = 11;
+    int64 TTL = 12;
+}
+
+message GetArrivalEstimatesResponse {
+  repeated ArrivalEstimate ArrivalEstimates = 1;
+  string LastEvaluatedKey = 2;
+  int32 ResultLength = 3;
+}
+
+service ScheduleService {
+    rpc GetArrivalEstimates(GetArrivalEstimatesRequest) returns (GetArrivalEstimatesResponse) {
+	option (google.api.http) = {
+	    post: "/v1/get-arrival-estimates"
+	    body: "*"
+	};
+    }
+}
