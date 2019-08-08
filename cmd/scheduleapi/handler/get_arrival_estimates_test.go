@@ -127,19 +127,6 @@ var _ = Describe("GetArrivalEstimates", func() {
 				Expect(err).ToNot(BeNil())
 			})
 		})
-		When("on different days", func() {
-			BeforeEach(func() {
-				in = &schedule.GetArrivalEstimatesRequest{
-					StartDate:   t,
-					EndDate:     n,
-					Station:     "North Avenue Station",
-					Destination: "North Springs",
-				}
-			})
-			It("should return an error", func() {
-				Expect(err).ToNot(BeNil())
-			})
-		})
 		When("everything is great", func() {
 			It("should not return an error", func() {
 				Expect(err).To(BeNil())

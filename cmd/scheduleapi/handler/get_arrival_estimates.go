@@ -59,9 +59,6 @@ func ValidateRequest(ctx context.Context, in *schedule.GetArrivalEstimatesReques
 	if err != nil {
 		errStrings = append(errStrings, "end must be RFC3339 encoded")
 	}
-	if e.Format("2006-01-02") != s.Format("2006-01-02") {
-		errStrings = append(errStrings, "start and end must be on the same day")
-	}
 	if len(errStrings) != 0 {
 		return errors.New(fmt.Sprintf("validation errors: %s", strings.Join(errStrings, ", ")))
 	}
@@ -77,7 +74,7 @@ func GetArrivalEstimatesRequestToDynamoQuery(in *schedule.GetArrivalEstimatesReq
 	if err != nil {
 		return nil, err
 	}
-	primaryKey := fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDestination(), s.Format("2006-01-02"))
+	primaryKey := fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDestination())
 	keyCondition := expression.
 		Key("PrimaryKey").
 		Equal(expression.Value(primaryKey)).
