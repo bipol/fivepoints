@@ -51,11 +51,11 @@ func ValidateRequest(ctx context.Context, in *schedule.GetArrivalEstimatesReques
 	if in.GetStartDate().GetSeconds() > in.GetEndDate().GetSeconds() {
 		errStrings = append(errStrings, "start date must be before end date")
 	}
-	s, err := ptypes.Timestamp(in.GetStartDate())
+	_, err := ptypes.Timestamp(in.GetStartDate())
 	if err != nil {
 		errStrings = append(errStrings, "start must be RFC3339 encoded")
 	}
-	e, err := ptypes.Timestamp(in.GetEndDate())
+	_, err = ptypes.Timestamp(in.GetEndDate())
 	if err != nil {
 		errStrings = append(errStrings, "end must be RFC3339 encoded")
 	}
