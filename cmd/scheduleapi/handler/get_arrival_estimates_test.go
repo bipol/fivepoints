@@ -70,7 +70,7 @@ var _ = Describe("GetArrivalEstimates", func() {
 			n, _ = ptypes.TimestampProto(time.Now().Add(24 * 60 * time.Minute))
 			in = &schedule.GetArrivalEstimatesRequest{
 				StartDate:   t,
-				EndDate:     t,
+				EndDate:     n,
 				Station:     "North Avenue Station",
 				Destination: "North Springs",
 			}
@@ -83,7 +83,7 @@ var _ = Describe("GetArrivalEstimates", func() {
 			BeforeEach(func() {
 				in = &schedule.GetArrivalEstimatesRequest{
 					StartDate: t,
-					EndDate:   t,
+					EndDate:   n,
 					Station:   "North Avenue Station",
 				}
 			})
@@ -95,7 +95,7 @@ var _ = Describe("GetArrivalEstimates", func() {
 			BeforeEach(func() {
 				in = &schedule.GetArrivalEstimatesRequest{
 					StartDate:   t,
-					EndDate:     t,
+					EndDate:     n,
 					Destination: "North Springs",
 				}
 			})
@@ -106,7 +106,7 @@ var _ = Describe("GetArrivalEstimates", func() {
 		When("missing start date", func() {
 			BeforeEach(func() {
 				in = &schedule.GetArrivalEstimatesRequest{
-					EndDate:     t,
+					EndDate:     n,
 					Station:     "North Avenue Station",
 					Destination: "North Springs",
 				}
@@ -158,7 +158,7 @@ var _ = Describe("GetArrivalEstimates", func() {
 				Expect(err).To(BeNil())
 			}
 
-			pKey = fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDestination(), currTime.Format("2006-01-02"))
+			pKey = fmt.Sprintf("%s_%s", in.GetStation(), in.GetDestination())
 		})
 		JustBeforeEach(func() {
 			queryIn, err = handler.GetArrivalEstimatesRequestToDynamoQuery(in, tableName)

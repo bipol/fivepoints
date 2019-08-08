@@ -74,7 +74,7 @@ func GetArrivalEstimatesRequestToDynamoQuery(in *schedule.GetArrivalEstimatesReq
 	if err != nil {
 		return nil, err
 	}
-	primaryKey := fmt.Sprintf("%s_%s_%s", in.GetStation(), in.GetDestination())
+	primaryKey := fmt.Sprintf("%s_%s", in.GetStation(), in.GetDestination())
 	keyCondition := expression.
 		Key("PrimaryKey").
 		Equal(expression.Value(primaryKey)).
