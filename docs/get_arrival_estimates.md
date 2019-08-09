@@ -4,7 +4,9 @@ subTitle: get arrival estimates
 ---
 
 # Get Arrival Estimates
-Allows a user to specify a `StartDate` and `EndDate`, which creates an `EVENT_TIME` period. Only events within this bound will be returned. We have a deadline 1 second currently, and will return a Deadline Exceeded error if we can't return results within that time period.
+`https://fivepoints.herokuapp.com/v1/get-arrival-estimates`
+This endpoint returns all events for a certain station and direction for a given period.
+The caller specifies a `StartDate` and `EndDate`, which creates an `EVENT_TIME` period. Only events within this bound will be returned.
 
 ## Request
 ```protobuf
@@ -23,6 +25,16 @@ message GetArrivalEstimatesRequest {
 | Station          | MARTA Station whose event times you are querying for     | `True`   |
 | Destination      | The destination station of the line you are querying for | `True`   |
 | LastEvaluatedKey | Provided in response, used to page through results       | `False`  |
+
+### Example Request
+```json
+{
+"StartDate": "2019-08-08T12:30:11+00:00",
+"EndDate": "2019-08-08T12:33:11+00:00",
+"Station": "AIRPORT STATION",
+"Destination": "Airport"
+}
+```
 
 ## Response
 
@@ -48,6 +60,8 @@ message ArrivalEstimate {
     int64 TTL = 12;
 }
 ```
+
+### Expected Status Codes
 
 ## Authentication
 This endpoint requires an `Authorization: Bearer jwt` header, with claim `fvp.Do` present.
